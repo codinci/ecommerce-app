@@ -2,15 +2,16 @@
 import ProductCard from '@/Components/ProductCard.vue'
 
 const items = [
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 'Ksh. 1000', saving: '10%'},
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 'Ksh. 1000', saving: '10%'},
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 'Ksh. 1000', saving: '10%'},
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 'Ksh. 1000', saving: '10%'},
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 'Ksh. 1000', saving: '10%'},
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 'Ksh. 1000', saving: '10%'},
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 'Ksh. 1000', saving: '10%'},
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 'Ksh. 1000', saving: '10%'},
+	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
+	{ name: 'shirt', image: '/images/shoes.jpg', size: 'large', price: 800, saving: '10%'},
+	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
+	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
+	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
+	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
+	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
+	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
 ]
+
 </script>
 <template>
 	<main class="bg-gray-100">

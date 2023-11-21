@@ -8,6 +8,10 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+
+const clearLocalStorage = () => {
+    localStorage.clear()
+}
 </script>
 
 <template>
@@ -29,7 +33,7 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href="/" :active="route().current('dashboard')">
+                                <NavLink :href="route('checkout')" :active="route().current('checkout')">
                                     Checkout
                                 </NavLink>
                             </div>
@@ -64,7 +68,7 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('logout')" method="post" as="button">
+                                        <DropdownLink :href="route('logout')" method="post" as="button" @click="clearLocalStorage">
                                             Log Out
                                         </DropdownLink>
                                     </template>
