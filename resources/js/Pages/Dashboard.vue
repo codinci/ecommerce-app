@@ -1,21 +1,117 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
+import { Head, Link } from '@inertiajs/vue3';
+import NavigationLayout from '@/Layouts/NavigationLayout.vue';
+
+const props = defineProps(['products']);
+
+const pageSize = ref(10);
+const currentPage = ref(1);
+
+const totalPages = computed(() => Math.ceil(props.products.length / pageSize.value));
+
+const paginatedProducts = computed(() => {
+  const start = (currentPage.value - 1) * pageSize.value;
+  const end = start + pageSize.value;
+  return props.products.slice(start, end);
+});
+
+const pages = computed(() => Array.from({ length: totalPages.value }, (_, index) => index + 1));
+
+const gotoPage = (page) => {
+  currentPage.value = page;
+};
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+  }
+};
+
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+};
 </script>
 
 <template>
     <Head title="Dashboard" />
-    <AuthenticatedLayout>
+    <NavigationLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
+            <div class="flex justify-between items-center">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
+
+                <Link class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" :href="route('product.create')" method="get" as="button">
+                    New Product
+                </Link>
+            </div>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <div v-if="!products.length" class="text-gray-900">No Products</div>
+                <div v-else>
+                <!-- Table -->
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Name
+                        </th>
+                        <th scope="col" class="px-2 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Promotional Price
+                        </th>
+                        <th scope="col" class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Size
+                        </th>
+                        <th scope="col" class="px-2 md:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Actions
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tr v-for="product in paginatedProducts" :key="product.id">
+                        <td class="px-4 md:px-6 py-4 whitespace-nowrap">
+                        {{ product.name }}
+                        </td>
+                        <td class="px-2 md:px-6 py-4 whitespace-nowrap">
+                            {{ product.promotional_price }}
+                        </td>
+                         <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                            {{ product.size }}
+                        </td>
+                        <td class="px-2 md:px-6 py-4 flex md:justify-around whitespace-nowrap">
+                            <Link :href="route('product.edit', { id: product.id })" class="mx-2 md:mx-0 text-blue-400 hover:text-blue-600 hover:scale-1">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </Link>
+                            <Link :href="route('product.destroy', { id: product.id })" class="text-red-400 hover:text-red-600 hover:scale-1">
+                                <i class="fa-solid fa-trash"></i>
+                            </Link>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <nav class="mt-4">
+                    <ul class="pagination">
+                    <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+                        <button @click="prevPage">Previous</button>
+                    </li>
+                    <li class="page-item" v-for="page in pages" :key="page" :class="{ 'active': page === currentPage }">
+                        <button @click="gotoPage(page)">{{ page }}</button>
+                    </li>
+                    <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
+                        <button @click="nextPage">Next</button>
+                    </li>
+                    </ul>
+                </nav>
                 </div>
             </div>
+            </div>
         </div>
-    </AuthenticatedLayout>
+    </NavigationLayout>
 </template>

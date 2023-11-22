@@ -11,12 +11,12 @@ const showNavigationDropdown = ref(false);
 
 //clear localStorage on logging out
 const clearLocalStorage = () => {
-    console.log('Logging out..')
     localStorage.clear()
 }
 
 
 </script>
+
 <template>
     <div class="min-h-screen bg-gray-100">
         <nav class="bg-white border-b border-gray-100">
@@ -37,8 +37,16 @@ const clearLocalStorage = () => {
                         </div>
 
                         <!-- Navigation Links -->
-                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                            <NavLink href="/" :active="route().current('home')">
+                        <div v-if="$page.props.auth.user && $page.props.auth.user.role === 'admin'" class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <NavLink  :href="route('dashboard')" :active="route().current('dashboard')">
+                                Dashboard
+                            </NavLink>
+                            <NavLink  :href="route('product.create')" :active="route().current('product.create')">
+                                New Product
+                            </NavLink>
+                        </div>
+                        <div v-else class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <NavLink  href="/" :active="route().current('home')">
                                 Home
                             </NavLink>
                             <NavLink :href="route('checkout')" :active="route().current('checkout')">
@@ -52,7 +60,7 @@ const clearLocalStorage = () => {
                             :href="route('login')"
                             class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                         >
-                            Log in
+                            Login
                         </Link>
                         <Link
                             :href="route('register')"
@@ -139,13 +147,22 @@ const clearLocalStorage = () => {
                     :class="{ block: showNavigationDropdown, hidden: !showNavigationDropdown }"
                     class="sm:hidden"
                 >
-                    <div class="pt-2 pb-3 space-y-1">
+                    <div v-if="$page.props.auth.user && $page.props.auth.user.role === 'admin'" class="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink  :href="route('dashboard')" :active="route().current('dashboard')">
+                            Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink  :href="route('product.create')" :active="route().current('product.create')">
+                            New Product
+                        </ResponsiveNavLink>
+                    </div>
+                    <div v-else class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink href="/" :active="route().current('home')">
                             Home
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('checkout')" :active="route().current('checkout')">
+                        <ResponsiveNavLink  :href="route('checkout')" :active="route().current('checkout')">
                             Cart
                         </ResponsiveNavLink>
+
                     </div>
                     <div v-if="!$page.props.auth.user" class="pt-2 pb-3 px-2 space-y-1">
                         <div>

@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import NavigationLayout from '@/Layouts/NavigationLayout.vue'
 import ProductsLayout from '@/Layouts/ProductsLayout.vue'

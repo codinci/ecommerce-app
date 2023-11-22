@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 /*
@@ -27,9 +28,16 @@ Route::get('/checkout', function () {
     return Inertia::render('Checkout');
 })->middleware(['auth'])->name('checkout');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth'])->name('dashboard');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [ProductController::class, 'index'])->name('dashboard');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('product.store');
+    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
+    Route::put('/products/{product}', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
+});
+
 
 
 require __DIR__.'/auth.php';
