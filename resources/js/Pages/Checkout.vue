@@ -1,9 +1,11 @@
 <script setup>
-import { ref }  from 'vue'
+import { ref, watch }  from 'vue'
 import { Head } from '@inertiajs/vue3';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import NavigationLayout from '@/Layouts/NavigationLayout.vue';
 
-const checkoutItems = JSON.parse(localStorage.getItem('checkOutItems'))
+const STORAGE_KEY = 'checkOutItems';
+
+const checkoutItems = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
 //add quantity property to each object in the checkoutItems array and make it reactive
 let cartItems = ref(checkoutItems.map(item => {
@@ -45,14 +47,13 @@ const formatCurrency = (value) => {
     return value.toLocaleString('en-US', { style: 'currency', currency: 'KSH' });
 }
 
-
 </script>
 
 <template>
-    <Head title="Checkout" />
-    <AuthenticatedLayout>
+    <Head title="Cart" />
+    <NavigationLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Checkout</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Cart</h2>
         </template>
 
         <div class="py-12">
@@ -103,5 +104,5 @@ const formatCurrency = (value) => {
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </NavigationLayout>
 </template>

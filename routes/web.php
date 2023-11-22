@@ -21,7 +21,7 @@ Route::get('/', function () {
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
     ]);
-});
+})->name('home');
 
 Route::get('/checkout', function () {
     return Inertia::render('Checkout');

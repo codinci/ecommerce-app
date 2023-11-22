@@ -1,19 +1,26 @@
 <script setup>
 import { ref } from 'vue'
 import { Link } from '@inertiajs/vue3';
+import NavLink from '@/Components/NavLink.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
-
 const showNavigationDropdown = ref(false);
+
+//clear localStorage on logging out
+const clearLocalStorage = () => {
+    console.log('Logging out..')
+    localStorage.clear()
+}
 
 
 </script>
 <template>
     <div class="min-h-screen bg-gray-100">
         <nav class="bg-white border-b border-gray-100">
+            <!-- Primary Navigation Menu -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <div class="flex">
@@ -27,6 +34,16 @@ const showNavigationDropdown = ref(false);
                                     Chapa Online Store
                                 </h1>
                             </Link>
+                        </div>
+
+                        <!-- Navigation Links -->
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <NavLink href="/" :active="route().current('home')">
+                                Home
+                            </NavLink>
+                            <NavLink :href="route('checkout')" :active="route().current('checkout')">
+                                Cart
+                            </NavLink>
                         </div>
                     </div>
 
@@ -73,7 +90,7 @@ const showNavigationDropdown = ref(false);
                                 </template>
 
                                 <template #content>
-                                    <DropdownLink :href="route('logout')" method="post" as="button">
+                                    <DropdownLink :href="route('logout')" method="post" as="button" @click="clearLocalStorage">
                                         Log Out
                                     </DropdownLink>
                                 </template>
@@ -122,6 +139,14 @@ const showNavigationDropdown = ref(false);
                     :class="{ block: showNavigationDropdown, hidden: !showNavigationDropdown }"
                     class="sm:hidden"
                 >
+                    <div class="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink href="/" :active="route().current('home')">
+                            Home
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('checkout')" :active="route().current('checkout')">
+                            Cart
+                        </ResponsiveNavLink>
+                    </div>
                     <div v-if="!$page.props.auth.user" class="pt-2 pb-3 px-2 space-y-1">
                         <div>
                             <Link
@@ -149,7 +174,7 @@ const showNavigationDropdown = ref(false);
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('logout')" method="post" as="button">
+                            <ResponsiveNavLink :href="route('logout')" method="post" as="button" @click="clearLocalStorage">
                                 Log Out
                             </ResponsiveNavLink>
                         </div>
