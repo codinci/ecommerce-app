@@ -41,7 +41,7 @@ class ProductController extends Controller
             'promotional_price' => $promotionalPrice,
             'saving' => $request->saving,
             'size' => $request->size,
-            'image_filename' => $request->image,
+            'image_filename' => $imageName,
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Product created successfully!');
@@ -63,10 +63,18 @@ class ProductController extends Controller
         $imageName = time().'.'.$request->image->extension();
 
         $request->image->move(public_path('images'), $imageName);
+        $promotionalPrice = $request->price * (1- ($request->saving/100));
 
-        $product->update($request->all());
+        $product->update([
+            'name' => $request->name,
+            'original_price' => $request->price,
+            'promotional_price' => $promotionalPrice,
+            'saving' => $request->saving,
+            'size' => $request->size,
+            'image_filename' => $imageName,
+        ]);
 
-        return redirect()->route('product.edit')->with('success', 'Product updated successfully!');
+        return redirect()->route('dashboard')->with('success', 'Product updated successfully!');
     }
 
     public function destroy(Product $product)

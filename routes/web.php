@@ -4,6 +4,7 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
 use Inertia\Inertia;
 
 /*
@@ -18,9 +19,12 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
+    $products = Product::all();
+    
     return Inertia::render('Home', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
+        'products' => $products->toArray(),
     ]);
 })->name('home');
 
