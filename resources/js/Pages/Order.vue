@@ -30,7 +30,6 @@ const totalPrice = Number(props.total).toLocaleString('en-US', { style: 'currenc
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
 				<h2 class="text-lg font-semibold mb-4">Select Payment Method</h2>
-				{{ paymentMethod }}
 
 				<form @submit.prevent="submit">
 					<div>

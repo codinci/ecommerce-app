@@ -56,23 +56,37 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        // dd($request->all());
         $request->validate([
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
         ]);
 
-        $imageName = time().'.'.$request->image->extension();
+        $promotionalPrice = $request->price * (1 - ($request->saving / 100));
 
-        $request->image->move(public_path('images'), $imageName);
-        $promotionalPrice = $request->price * (1- ($request->saving/100));
+        //check if there was an image upload
+        if (!$request->hasFile('image')) {
+            $product->update([
+                'name' => $request->name,
+                'original_price' => $request->price,
+                'promotional_price' => $promotionalPrice,
+                'saving' => $request->saving,
+                'size' => $request->size,
+            ]);
+        }
+        else {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
 
-        $product->update([
-            'name' => $request->name,
-            'original_price' => $request->price,
-            'promotional_price' => $promotionalPrice,
-            'saving' => $request->saving,
-            'size' => $request->size,
-            'image_filename' => $imageName,
-        ]);
+            // Update only the image
+            $product->update([
+                'name' => $request->name,
+                'original_price' => $request->price,
+                'promotional_price' => $promotionalPrice,
+                'saving' => $request->saving,
+                'size' => $request->size,
+                'image_filename' => $imageName
+            ]);
+        }
 
         return redirect()->route('dashboard')->with('success', 'Product updated successfully!');
     }

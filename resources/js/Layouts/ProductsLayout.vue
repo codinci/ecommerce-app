@@ -6,7 +6,7 @@ const props = defineProps({
 	products: Object
 })
 const sizes = computed(() => {
-	const sizeSet = props.products.map(product => product.size)
+	const sizeSet = [...new Set(props.products.map(product => product.size))]
 	return sizeSet;
 });
 const selectedSize = ref(null);

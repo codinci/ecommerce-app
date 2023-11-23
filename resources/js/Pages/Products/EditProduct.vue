@@ -6,9 +6,9 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import NavigationLayout from '@/Layouts/NavigationLayout.vue';
 
-
 const props = defineProps(['product'])
 const form = useForm({
+	_method: 'PUT',
     name: props.product.name,
     price: props.product.original_price,
 	size: props.product.size,
@@ -24,11 +24,11 @@ const handleImageChange = (event) => {
 };
 
 const submit = () => {
-    form.put(route('product.update', {id: props.product.id}), {
+
+    form.post(route('product.update', {id : props.product.id}), {
         onFinish: () => form.reset(),
     });
 };
-
 </script>
 <template>
 	<NavigationLayout>
@@ -39,6 +39,8 @@ const submit = () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             	<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
 					<form @submit.prevent="submit">
+						<input type="hidden" name="_method" v-model="form._method" />
+
 						<div>
 							<InputLabel  for="name" value="Product Name" />
 							<TextInput
@@ -100,12 +102,12 @@ const submit = () => {
 
 						<div class="mt-4">
                             <InputLabel for="image" value="Product Image" />
-							<img v-if="form.image"  :src="`/images/${form.image}`" alt="form.name" class="mt-2 block w-32 h-32" />
 
                             <input
                                 id="image"
                                 type="file"
                                 class="mt-1 block w-full"
+								:preview="`/images/${props.product.image_filename}`"
 								@change="handleImageChange"
                             />
 
@@ -123,8 +125,6 @@ const submit = () => {
 				</div>
 			</div>
 		</div>
-
-
 	</NavigationLayout>
 
 </template>

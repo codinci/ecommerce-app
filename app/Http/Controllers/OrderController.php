@@ -24,6 +24,6 @@ class OrderController extends Controller
             'customer_id' => $user->id,
             'total_amount' => $request->total,
         ]);
-        return redirect()->route('dashboard')->with('success', 'Order made successfully!');
+        return redirect()->route('home')->with('success', 'Order made successfully!');
     }
 }
