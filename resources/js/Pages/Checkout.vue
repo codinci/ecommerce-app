@@ -30,14 +30,14 @@ const decreaseQuantity = (index) => {
 
 //calculate the price of each indivicual cart item based on quantity
 const calculatedItemPrice = (item) => {
-    const itemPrice = item.price * item.quantity
+    const itemPrice = item.promotional_price * item.quantity
     return formatCurrency(itemPrice)
 }
 
 //Calculate the total price of cart items
 const getTotalPrice = (items) => {
     return items.reduce((total, item) => {
-        const itemPrice = item.quantity * item.price;
+        const itemPrice = item.quantity * item.promotional_price;
         return total + itemPrice
     }, 0)
 }
@@ -68,7 +68,7 @@ const formatCurrency = (value) => {
                         <!-- Checkout image, name, and delete button -->
                         <div class="flex justify-between mt-2">
                         <div class="flex">
-                            <img :src="item.image" :alt="item.name" class="w-20 md:w-60 h-18 md:h-40 object-cover m-2">
+                            <img :src="`/images/${item.image_filename}`" :alt="item.name" class="w-20 md:w-60 h-18 md:h-40 object-cover m-2">
                             <h3 class="text-grey-600 text-lg font-semibold">{{ item.name }}</h3>
                         </div>
                         <button @click="removeItem(index)" class="p-4 mt-[-3rem] md:mt-[-8rem]  text-red-400 hover:text-red-600 hover:scale-1">

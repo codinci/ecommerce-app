@@ -3,15 +3,20 @@ import { Head, Link } from '@inertiajs/vue3';
 import NavigationLayout from '@/Layouts/NavigationLayout.vue'
 import ProductsLayout from '@/Layouts/ProductsLayout.vue'
 
-defineProps({
+const props = defineProps({
+
     canLogin: {
         type: Boolean,
     },
     canRegister: {
         type: Boolean,
+    },
+    products: {
+        type: Object,
     }
 });
 
+console.log(props.products);
 </script>
 
 <template>
@@ -20,7 +25,7 @@ defineProps({
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Products</h2>
         </template>
-        <ProductsLayout/>
+        <ProductsLayout :products="products"/>
     </NavigationLayout>
 
 </template>

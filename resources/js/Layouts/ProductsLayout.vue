@@ -1,16 +1,20 @@
 <script setup>
 import ProductCard from '@/Components/ProductCard.vue'
 
-const items = [
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
-	{ name: 'shirt', image: '/images/shoes.jpg', size: 'large', price: 800, saving: '10%'},
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
-	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
-]
+// const items = [
+// 	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
+// 	{ name: 'shirt', image: '/images/shoes.jpg', size: 'large', price: 800, saving: '10%'},
+// 	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
+// 	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
+// 	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
+// 	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
+// 	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
+// 	{ name: 'Shoes', image: '/images/shoes.jpg', size: 'large', price: 1000, saving: '10%'},
+// ]
+
+defineProps({
+	products: Object
+})
 
 </script>
 <template>
@@ -19,7 +23,7 @@ const items = [
 
 			<!-- Repeat the following item block for each of your 20 items -->
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-				 <ProductCard v-for="(item, index) in items" :key="index" :productDetails="item" />
+				 <ProductCard v-for="(item, index) in products" :key="index" :productDetails="item" />
 			</div>
 		</div>
 	</main>
