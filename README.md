@@ -21,8 +21,73 @@ This is a demo online shop
 
 ### Run Locally
 
-- First clone the application to your machine
+1. Create directory to clone the project
+```
+mkdir ecommerce-app
 
+cd ecommerce-app
+```
+
+1. Clone the application to the newly created folder
+```
+git clone https://github.com/codinci/ecommerce-app.git/ ${projectName}
+```
+change the projectName to whichever name you find suitable
+
+1. Navigate to the clone repo directory
+```
+cd ${projectName}
+```
+
+1. Install laravel dependencies
+```
+composer install
+```
+
+1. Install npm modules
+```
+npm install
+```
+1. Create a copy of .env file
+```
+cp .env.example .env
+```
+
+1. Generate an app encryption key
+```
+php artisan key:generate
+```
+
+1. Create a database in mysql
+```
+create database ${databaseName}
+```
+1. In the .env file add the database information to allow laravel toconnect to the database
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=${databaseName}
+DB_USERNAME=${userName}
+DB_PASSWORD=${password}
+```
+change the databaseName, userName and password variables to your specific information
+
+1. Migrate the database
+```
+php artisan migrate
+```
+1. Seed the database
+```
+php artisan db:seed
+```
+
+1. Run the application
+```
+npm run dev
+
+php artisan serve
+```
 ### The challenge
 
 Users should be able to:
@@ -45,7 +110,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Github](https://github.com/codinci/url-shortening-api)
+- Solution URL: [Github](https://github.com/codinci/ecommerce-app)
 
 ## My process
 
