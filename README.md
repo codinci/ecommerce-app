@@ -28,41 +28,43 @@ mkdir ecommerce-app
 cd ecommerce-app
 ```
 
-1. Clone the application to the newly created folder
+2. Clone the application to the newly created folder
 ```
 git clone https://github.com/codinci/ecommerce-app.git/ ${projectName}
 ```
-change the projectName to whichever name you find suitable
+*change the **projectName** to whichever name you find suitable*
 
-1. Navigate to the clone repo directory
+3. Navigate to the cloned repo directory
 ```
 cd ${projectName}
 ```
 
-1. Install laravel dependencies
+4. Install laravel dependencies
 ```
 composer install
 ```
 
-1. Install npm modules
+5. Install npm modules
 ```
 npm install
 ```
-1. Create a copy of .env file
+
+6. Create a copy of .env file
 ```
 cp .env.example .env
 ```
 
-1. Generate an app encryption key
+7. Generate an app encryption key
 ```
 php artisan key:generate
 ```
 
-1. Create a database in mysql
+8. Create a database in mysql
 ```
 create database ${databaseName}
 ```
-1. In the .env file add the database information to allow laravel toconnect to the database
+
+9. In the .env file add the database information to allow laravel toconnect to the database
 ```
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -71,23 +73,26 @@ DB_DATABASE=${databaseName}
 DB_USERNAME=${userName}
 DB_PASSWORD=${password}
 ```
-change the databaseName, userName and password variables to your specific information
+*change the **databaseName**, **userName** and **password** variables to your respective information*
 
-1. Migrate the database
+10. Migrate the database
 ```
 php artisan migrate
 ```
-1. Seed the database
+
+11. Seed the database
 ```
 php artisan db:seed
 ```
 
-1. Run the application
+12. Run the application
 ```
 npm run dev
 
 php artisan serve
 ```
+
+*the application should run on* **127.0.0.1:8100**
 ### The challenge
 
 Users should be able to:
