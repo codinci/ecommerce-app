@@ -1,6 +1,6 @@
 <script setup>
-import { ref }  from 'vue'
-import { Head } from '@inertiajs/vue3';
+import { ref, computed }  from 'vue'
+import { Head, Link } from '@inertiajs/vue3';
 import NavigationLayout from '@/Layouts/NavigationLayout.vue';
 
 const STORAGE_KEY = 'checkOutItems';
@@ -47,6 +47,7 @@ const formatCurrency = (value) => {
     return value.toLocaleString('en-US', { style: 'currency', currency: 'KSH' });
 }
 
+const total = computed(() => getTotalPrice(cartItems.value));
 </script>
 
 <template>
@@ -99,9 +100,12 @@ const formatCurrency = (value) => {
                     </div>
                 </div>
                 <div class="flex flex-col items-start w-48 float-right mr-8">
-                    <p class="mb-4">Total: {{ formatCurrency(getTotalPrice(cartItems)) }}</p>
-                    <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Checkout</button>
+                    <p class="mb-4">Total: {{ formatCurrency(total) }}</p>
+                    <Link class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" :href="route('order', { total: total })" method="get" as="button">
+                        Checkout
+                    </Link>
                 </div>
+
             </div>
         </div>
     </NavigationLayout>

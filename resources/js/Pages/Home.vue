@@ -4,7 +4,6 @@ import NavigationLayout from '@/Layouts/NavigationLayout.vue'
 import ProductsLayout from '@/Layouts/ProductsLayout.vue'
 
 const props = defineProps({
-
     canLogin: {
         type: Boolean,
     },
@@ -16,7 +15,6 @@ const props = defineProps({
     }
 });
 
-console.log(props.products);
 </script>
 
 <template>
