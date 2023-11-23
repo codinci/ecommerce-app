@@ -30,13 +30,13 @@ Users should be able to:
 
 ### Screenshot
 ### Desktop View
-![Desktop Version](./images/screen-shot-desktop.png)
+![Desktop Version](./images/screenshots/screenshot-desktop.png)
 
 ### Mobile View
 - Mobile View
-![Mobile Version](./images/screen-shot-mobile.png)
+![Mobile Version](./images/screenshots/screenshot-mobile.png)
 - Mobile Navigation
-![Mobile Navigation](./images/screen-shot-mobile-navbar.png)
+![Mobile Navigation](./images/screenshots/screenshot-mobile-navbar.png)
 
 ### Links
 
