@@ -5,6 +5,7 @@ This is a demo online shop
 ## Table of contents
 
 - [Overview](#overview)
+  - [Run Locally](#run-locally)
   - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
   - [Links](#links)
@@ -18,6 +19,10 @@ This is a demo online shop
 
 ## Overview
 
+### Run Locally
+
+- First clone the application to your machine
+
 ### The challenge
 
 Users should be able to:
@@ -30,13 +35,13 @@ Users should be able to:
 
 ### Screenshot
 ### Desktop View
-![Desktop Version](./images/screenshots/screenshot-desktop.png)
+![Desktop Version](/public/images/screenshots/screenshot-desktop.png)
 
 ### Mobile View
 - Mobile View
-![Mobile Version](./images/screenshots/screenshot-mobile.png)
+![Mobile Version](/public/images/screenshots/screenshot-mobile.png)
 - Mobile Navigation
-![Mobile Navigation](./images/screenshots/screenshot-mobile-navbar.png)
+![Mobile Navigation](/public/images/screenshots/screenshot-mobile-navbar.png)
 
 ### Links
 
