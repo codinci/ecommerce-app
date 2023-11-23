@@ -56,7 +56,6 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        // dd($request->all());
         $request->validate([
             'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
         ]);

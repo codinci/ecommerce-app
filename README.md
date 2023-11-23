@@ -1,66 +1,134 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Ecommerce Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a demo online shop
 
-## About Ecommerce 
+## Table of contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Overview
 
-## Learning Laravel
+### The challenge
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Users should be able to:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- Register or login into the application
+- View products on the platform
+- Add items to cart
+- Make an order and pick between two payment methods
+- Filter products based on size
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Screenshot
+### Desktop View
+![Desktop Version](./images/screen-shot-desktop.png)
 
-## Laravel Sponsors
+### Mobile View
+- Mobile View
+![Mobile Version](./images/screen-shot-mobile.png)
+- Mobile Navigation
+![Mobile Navigation](./images/screen-shot-mobile-navbar.png)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Links
 
-### Premium Partners
+- Solution URL: [Github](https://github.com/codinci/url-shortening-api)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## My process
 
-## Contributing
+### Built with
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- [Vue](https://vuejs.org/) - JS framework
+- [Inertia](https://inertiajs.com/) - Adapter to create monolithic applications
+- [Laravel](https://laravel.com/) - PHP framework
+- [MySQL](https://www.mysql.com/) - Database management
+- [Tailwind Css](https://tailwindcss.com/) - For styles
+- [Fontawesome](https://fontawesome.com/) - For icons
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### What I learned
+- Made a refresher on development of Laravel, Inertia and VueJS
+- Learnt on use of set to get unique properties in an array
+```
+const sizes = computed(() => {
+	const sizeSet = [...new Set(props.products.map(product => product.size))]
+	return sizeSet;
+});
+```
+- Use of method poofing to handle update of a file upload
+```
+const form = useForm({
+	_method: 'PUT',
+    name: props.product.name,
+    price: props.product.original_price,
+	size: props.product.size,
+	saving: props.product.saving,
+	image: props.product.image_filename,
+});
+```
+```
+const submit = () => {
+    form.post(route('product.update', {id : props.product.id}), {
+        onFinish: () => form.reset(),
+    });
+};
+```
+```
+<form @submit.prevent="submit">
+	<input type="hidden" name="_method" v-model="form._method" />
+```
+- Making custom validations
+```
+<?php
 
-## Security Vulnerabilities
+namespace App\Rules;
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+use Closure;
+use Illuminate\Contracts\Validation\ValidationRule;
 
-## License
+class Phonenumber implements ValidationRule
+{
+    /**
+     * Run the validation rule.
+     *
+     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     */
+    public function validate(string $attribute, mixed $value, Closure $fail): void
+    {
+       if(!preg_match('/^(01|07)\d{8}$/', $value)) {
+        $fail('The :attribute must be a a valid phone number.');
+       }
+    }
+}
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+### Continued development
+
+- Better error and success handling management.
+- Save cart items to a state management store such as Pinia.
+- Redirection of users based on their role.
+- Utilize vue-router for enhanced routing on VueJS
+- A user profile
+- More categories and filter options.
+- Improve on the UI/UX of the application.
+- Managing orders via proper saving of properties such as the product being ordered
+  and payment of the order.
+
+
+### Useful resources
+
+- [Stack OverFlow](https://stackoverflow.com/questions/69297185/updating-the-image-in-laravel-8-inertia-validation-error-even-the-fields-are) - This helped me gain insight on method poofing in order to help resolve update of a file upload
+- [Stack OverFlow](https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicatesb) - This helped me gain insight on how to extract unique values from an array.
+
+## Author
+- Github - [codinci](https://github.com/codinci)
+

@@ -5,10 +5,12 @@ import ProductCard from '@/Components/ProductCard.vue'
 const props = defineProps({
 	products: Object
 })
+
 const sizes = computed(() => {
 	const sizeSet = [...new Set(props.products.map(product => product.size))]
 	return sizeSet;
 });
+
 const selectedSize = ref(null);
 
 const filteredProducts = ref(props.products);

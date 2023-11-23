@@ -32,6 +32,7 @@ const submit = () => {
 		<template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">New Product</h2>
         </template>
+
 		 <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             	<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
@@ -94,7 +95,6 @@ const submit = () => {
 
 						</div>
 
-
 						<div class="mt-4">
                             <InputLabel for="image" value="Product Image" />
 
@@ -108,8 +108,6 @@ const submit = () => {
                             <InputError class="mt-2" :message="form.errors.image" />
 						</div>
 
-
-
 						<div class="flex items-center justify-end mt-4">
 							<PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
 								Add new product
@@ -120,5 +118,4 @@ const submit = () => {
 			</div>
 		</div>
 	</NavigationLayout>
-
 </template>

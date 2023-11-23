@@ -99,6 +99,7 @@ const total = computed(() => getTotalPrice(cartItems.value));
                     </div>
                     </div>
                 </div>
+                
                 <div class="flex flex-col items-start w-48 float-right mr-8">
                     <p class="mb-4">Total: {{ formatCurrency(total) }}</p>
                     <Link class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" :href="route('order', { total: total })" method="get" as="button">
