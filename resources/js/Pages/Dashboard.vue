@@ -1,23 +1,31 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import Modal from '@/Components/Modal.vue';
+import DangerButton from '@/Components/DangerButton.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 import NavigationLayout from '@/Layouts/NavigationLayout.vue';
 
 const props = defineProps(['products']);
 
+//defining pages
 const pageSize = ref(10);
 const currentPage = ref(1);
 
 const totalPages = computed(() => Math.ceil(props.products.length / pageSize.value));
 
+//defining items per page
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value;
   const end = start + pageSize.value;
   return props.products.slice(start, end);
 });
 
+//defining number of pages
 const pages = computed(() => Array.from({ length: totalPages.value }, (_, index) => index + 1));
 
+//page movement functions
 const gotoPage = (page) => {
   currentPage.value = page;
 };
@@ -33,6 +41,29 @@ const prevPage = () => {
     currentPage.value--;
   }
 };
+
+//product deletion
+const confirmingProductDeletion = ref(false);
+const productToDelete = ref(null);
+const form = useForm({});
+const confirmProductDeletion = (product) => {
+    confirmingProductDeletion.value = true;
+    productToDelete.value = product;
+};
+const closeModal = () => {
+    confirmingProductDeletion.value = false;
+};
+
+const deleteProduct = (id) => {
+    form.delete(route('product.destroy', { id: id }), {
+        preserveScroll: true,
+        onSuccess: () => closeModal(),
+        onError: () => 'Something went wrong',
+        onFinish: () => form.reset(),
+    });
+};
+
+
 </script>
 
 <template>
@@ -50,68 +81,88 @@ const prevPage = () => {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <div v-if="!products.length" class="text-gray-900">No Products</div>
-                <div v-else>
-                <!-- Table -->
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Name
-                        </th>
-                        <th scope="col" class="px-2 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Promotional Price
-                        </th>
-                        <th scope="col" class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Size
-                        </th>
-                        <th scope="col" class="px-2 md:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                    <tr v-for="product in paginatedProducts" :key="product.id">
-                        <td class="px-4 md:px-6 py-4 whitespace-nowrap">
-                        {{ product.name }}
-                        </td>
-                        <td class="px-2 md:px-6 py-4 whitespace-nowrap">
-                            {{ product.promotional_price }}
-                        </td>
-                         <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
-                            {{ product.size }}
-                        </td>
-                        <td class="px-2 md:px-6 py-4 flex md:justify-around whitespace-nowrap">
-                            <Link :href="route('product.edit', { id: product.id })" class="mx-2 md:mx-0 text-blue-400 hover:text-blue-600 hover:scale-1">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                            </Link>
-                            <Link :href="route('product.destroy', { id: product.id })" class="text-red-400 hover:text-red-600 hover:scale-1">
-                                <i class="fa-solid fa-trash"></i>
-                            </Link>
-                        </td>
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <div v-if="!products.length" class="text-gray-900">No Products</div>
+                    <div v-else>
+                    <!-- Table -->
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Name
+                            </th>
+                            <th scope="col" class="px-2 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Promotional Price
+                            </th>
+                            <th scope="col" class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Size
+                            </th>
+                            <th scope="col" class="px-2 md:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Actions
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tr v-for="product in paginatedProducts" :key="product.id">
+                            <td class="px-4 md:px-6 py-4 whitespace-nowrap">
+                            {{ product.name }}
+                            </td>
+                            <td class="px-2 md:px-6 py-4 whitespace-nowrap">
+                                {{ product.promotional_price }}
+                            </td>
+                            <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                                {{ product.size }}
+                            </td>
+                            <td class="px-2 md:px-6 py-4 flex md:justify-around whitespace-nowrap">
+                                <Link :href="route('product.edit', { id: product.id })" class="mx-2 md:mx-0 text-blue-400 hover:text-blue-600 hover:scale-1">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </Link>
+                                <DangerButton @click="confirmProductDeletion(product)">
+                                    <i class="fa-solid fa-trash"></i>
+                                </DangerButton>
 
-                    </tr>
-                    </tbody>
-                </table>
+                            </td>
 
-                <!-- Pagination -->
-                <nav class="mt-4">
-                    <ul class="pagination">
-                    <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
-                        <button @click="prevPage">Previous</button>
-                    </li>
-                    <li class="page-item" v-for="page in pages" :key="page" :class="{ 'active': page === currentPage }">
-                        <button @click="gotoPage(page)">{{ page }}</button>
-                    </li>
-                    <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
-                        <button @click="nextPage">Next</button>
-                    </li>
-                    </ul>
-                </nav>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination -->
+                    <nav class="mt-4">
+                        <ul class="pagination flex justify-evenly">
+                        <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+                            <PrimaryButton @click="prevPage">Previous</PrimaryButton>
+                        </li>
+                        <li class="page-item" v-for="page in pages" :key="page" :class="{ 'active': page === currentPage }">
+                            <button @click="gotoPage(page)">{{ page }}</button>
+                        </li>
+                        <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
+                            <PrimaryButton @click="nextPage">Next</PrimaryButton>
+                        </li>
+                        </ul>
+                    </nav>
+                    </div>
                 </div>
             </div>
-            </div>
+
+            <Modal :show="confirmingProductDeletion" @close="closeModal">
+                <div class="p-6">
+                    <h2 class="text-lg font-medium text-gray-900">
+                        Are you sure you want to delete  {{ productToDelete.name }}?
+                    </h2>
+
+                    <div class="mt-6 flex justify-end">
+                        <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
+
+                        <DangerButton
+                            class="ms-3"
+                            @click="deleteProduct(productToDelete.id)"
+                        >
+                            Delete Product
+                        </DangerButton>
+                    </div>
+                </div>
+            </Modal>
         </div>
     </NavigationLayout>
 </template>
