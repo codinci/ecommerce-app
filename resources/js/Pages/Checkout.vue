@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch }  from 'vue'
+import { ref }  from 'vue'
 import { Head } from '@inertiajs/vue3';
 import NavigationLayout from '@/Layouts/NavigationLayout.vue';
 

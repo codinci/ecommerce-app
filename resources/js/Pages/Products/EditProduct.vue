@@ -29,7 +29,6 @@ const submit = () => {
     });
 };
 
-console.log(props.product);
 </script>
 <template>
 	<NavigationLayout>

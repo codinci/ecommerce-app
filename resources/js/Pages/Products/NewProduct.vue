@@ -119,8 +119,6 @@ const submit = () => {
 				</div>
 			</div>
 		</div>
-
-
 	</NavigationLayout>
 
 </template>
