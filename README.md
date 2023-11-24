@@ -93,6 +93,12 @@ php artisan serve
 ```
 
 *the application should run on* **127.0.0.1:8100**
+
+13. You can run tests
+```
+php artisan test
+```
+
 ### The challenge
 
 Users should be able to:
